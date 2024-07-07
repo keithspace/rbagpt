@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Chatbot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        textarea {
+            width: 100%;
+            height: 200px;
+            resize: vertical;
+            margin-bottom: 10px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .response {
+            margin-top: 10px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f5f5f5;
+        }
+    </style>
+</head>
+<body>
+    <h1>AI Chatbot</h1>
+    <form id="chat-form">
+        <textarea id="input-text"></textarea>
+        <button id="send-btn" type="submit">Send</button>
+    </form>
+    <div id="response" class="response"></div>
+
+    <script>
+        const form = document.getElementById("chat-form");
+const inputText = document.getElementById("input-text");
+const response = document.getElementById("response");
+
+form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const input = inputText.value.trim();
+    if (input) {
+        const res = await fetch("http://localhost:3000/ask", {
+            method: "POST",
+            headers: {
+                "Content-Type": "text/plain",
+            },
+            body: input,
+            
+        });
+        const text = await res.text();
+        response.textContent = text;
+        inputText.value = "";
+    }
+});
+
+
+    </script>
+</body>
+</html>
